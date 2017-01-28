@@ -1,3 +1,11 @@
+<?php 
+$ aplicación -> get ( ' / cowsay ' , la función () utilizar ( $ aplicación ) {
+   $ aplicación [ ' monólogo ' ] -> addDebug ( ' cowsay ' );
+   retorno  " <pre> " . \ Cowsayphp \ Vaca :: dicen ( " Las habas frescas " ). " </ pre> " ; 
+});
+
+?> 
+
 <html> 
 
 <head> 
