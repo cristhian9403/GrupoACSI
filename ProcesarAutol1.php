@@ -13,8 +13,6 @@ $tel = $_POST["tel"];
 $Sticker = $_POST["Sticker"];
 $tipovincu = $_POST["tipovincu"];
 $numPatronal = $_POST["numPatronal"];
-$afiliadosPensiones = $_POST["afiliadosPensiones"];
-$renglonDiligencia = $_POST["renglonDiligencia"];
 $tipoCobertura = $_POST["tipoCobertura"];
 $spr = $_POST["spr"];
 $tipoDocCET = $_POST["tipoDocCET"];
@@ -27,6 +25,10 @@ $diastrabajados = $_POST["diastrabajados"];
 $IBC = $_POST["IBC"];
 $ruta = $_POST["ruta"];
 
+$tipoDocCET1 = chop($tipoDocCET);    // Elimina saltos de linea y espacio, pero solo al final de la cadena 
+$tipoDocCET2 = nl2br($tipoDocCET1);         // Agregamos los saltos de linea <br /> 
+$array_tipoDocCET = explode("<br />", $tipoDocCET2); // Creamos array con los datos recibidos  
+$cuenta_tipoDocCET = count($array_tipoDocCET);     // Asi contamos los valores del array 
 
 $cedulas = chop($cedula);    // Elimina saltos de linea y espacio, pero solo al final de la cadena 
 $cedulass = nl2br($cedulas);         // Agregamos los saltos de linea <br /> 
@@ -68,74 +70,74 @@ $semanaSiguiente = time() + (7 * 24 * 60 * 60);
                    // 7 días; 24 horas; 60 minutos; 60 segundos
 
 // salario minimo legal vijete
-if ($AÑOMES >= 201701) {
-    $smd =24590.56;
-}
-if ($AÑOMES >= 201601) {
-    $smd =22981.83;
-}
-if ($AÑOMES >= 201501) {
-    $smd =21478.33;
-}
-if ($AÑOMES >= 201401) {
-    $smd =20533.33;
-}
-if ($AÑOMES >= 201301) {
-    $smd =19650.00;
-}
-if ($AÑOMES >= 201201) {
-    $smd =18890.00;
-}
-if ($AÑOMES >= 201101) {
-    $smd =17853.33;
-}
-if ($AÑOMES >= 201001) {
-    $smd =17166.67;
-}
-if ($AÑOMES >= 200901) {
-    $smd =16563.33;
-}
-if ($AÑOMES >= 200801) {
-    $smd =15383.33;
-}
-if ($AÑOMES >= 200701) {
-    $smd =14456.67;
-}
-if ($AÑOMES >= 200601) {
-    $smd =13600.00;  
-}
-if ($AÑOMES >= 200501) {
-    $smd =12716.67;
-}
-if ($AÑOMES >= 200401) {
-    $smd =11933.33;
-}
-if ($AÑOMES >= 200301) {
-    $smd =11066.67;
-}
-if ($AÑOMES >= 200201) {
-    $smd =10300.00;
-}
-if ($AÑOMES >= 200101) {
-    $smd =9533.33;
-}
-if ($AÑOMES >= 200001) {
-    $smd =8670.00;
-}
-if ($AÑOMES >= 199901) {
-    $smd =7882.00;
-}
-if ($AÑOMES >= 199801) {
-    $smd =6794.20;
-}
-if ($AÑOMES >= 199701) {
-    $smd =5733.50;
+if ($AÑOMES >= 199501) {
+    $smd =3964.45;
 }
 if ($AÑOMES >= 199601) {
     $smd =4737.50;
 }
-if ($AÑOMES >= 199501) {
-    $smd =3964.45;
+if ($AÑOMES >= 199701) {
+    $smd =5733.50;
+}
+if ($AÑOMES >= 199801) {
+    $smd =6794.20;
+}
+if ($AÑOMES >= 199901) {
+    $smd =7882.00;
+}
+if ($AÑOMES >= 200001) {
+    $smd =8670.00;
+}
+if ($AÑOMES >= 200101) {
+    $smd =9533.33;
+}
+if ($AÑOMES >= 200201) {
+    $smd =10300.00;
+}
+if ($AÑOMES >= 200301) {
+    $smd =11066.67;
+}
+if ($AÑOMES >= 200401) {
+    $smd =11933.33;
+}
+if ($AÑOMES >= 200501) {
+    $smd =12716.67;
+}
+if ($AÑOMES >= 200601) {
+    $smd =13600.00;  
+}
+if ($AÑOMES >= 200701) {
+    $smd =14456.67;
+}
+if ($AÑOMES >= 200801) {
+    $smd =15383.33;
+}
+if ($AÑOMES >= 200901) {
+    $smd =16563.33;
+}
+if ($AÑOMES >= 201001) {
+    $smd =17166.67;
+}
+if ($AÑOMES >= 201101) {
+    $smd =17853.33;
+}
+if ($AÑOMES >= 201201) {
+    $smd =18890.00;
+}
+if ($AÑOMES >= 201301) {
+    $smd =19650.00;
+}
+if ($AÑOMES >= 201401) {
+    $smd =20533.33;
+}
+if ($AÑOMES >= 201501) {
+    $smd =21478.33;
+}
+if ($AÑOMES >= 201601) {
+    $smd =22981.83;
+}
+if ($AÑOMES >= 201701) {
+    $smd =24590.56;
 }
 
 
@@ -191,15 +193,8 @@ if ($AÑOMES <= 199512)
         echo $array_AportePension[16];
     }
 }
-if ($AÑOMES >= 199501)
-{
-    for ($i=0; $i < $cuenta_IBC; $i++) 
-    { 
-        $salario = preg_replace('/[^0-9]+/', '',$array_IBC[$i]);
-        $array_AportePension[$i] = ($salario*0.125);
-    }
-}
 
+echo floor($array_AportePension[0]);
 
 //aporte de FSP
 
@@ -214,15 +209,7 @@ if ($AÑOMES >= 199501)
     {
             $array_AporteFSP[$x] = (str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_IBC[$x])), 0),10, "0", STR_PAD_LEFT)*00.018);        
     }
-    if (($salario/$array_diastrabajados[$x]) >= (($smd*19)+1))
-    {
-            $array_AporteFSP[$x] = (str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_IBC[$x])), 0),10, "0", STR_PAD_LEFT)*00.018);        
-    }
     if (($salario/$array_diastrabajados[$x]) < (($smd*19)+1))
-    {
-            $array_AporteFSP[$x] = (str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_IBC[$x])), 0),10, "0", STR_PAD_LEFT)*00.016);        
-    }
-    if (($salario/$array_diastrabajados[$x]) >= (($smd*18)+1))
     {
             $array_AporteFSP[$x] = (str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_IBC[$x])), 0),10, "0", STR_PAD_LEFT)*00.016);        
     }
@@ -230,15 +217,7 @@ if ($AÑOMES >= 199501)
     {
             $array_AporteFSP[$x] = (str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_IBC[$x])), 0),10, "0", STR_PAD_LEFT)*00.014);        
     }
-    if (($salario/$array_diastrabajados[$x]) >= (($smd*17)+1))
-    {
-            $array_AporteFSP[$x] = (str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_IBC[$x])), 0),10, "0", STR_PAD_LEFT)*00.014);        
-    }
      if (($salario/$array_diastrabajados[$x]) < (($smd*17)+1))
-    {
-            $array_AporteFSP[$x] = (str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_IBC[$x])), 0),10, "0", STR_PAD_LEFT)*00.012);        
-    }
-    if (($salario/$array_diastrabajados[$x]) >= (($smd*16)+1))
     {
             $array_AporteFSP[$x] = (str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_IBC[$x])), 0),10, "0", STR_PAD_LEFT)*00.012);        
     }
@@ -246,15 +225,11 @@ if ($AÑOMES >= 199501)
     {
             $array_AporteFSP[$x] = (intval(preg_replace('/[^0-9]+/', '', trim($array_IBC[$x])), 0)*00.01);       
     }
-    if (($salario/$array_diastrabajados[$x]) >= ($smd*4))
+    if (($salario/$array_diastrabajados[$x]) < ($smd*4))
     {
-            $array_AporteFSP[$x] = (intval(preg_replace('/[^0-9]+/', '', trim($array_IBC[$x])), 0)*00.01);            
+            $array_AporteFSP[$x] = (intval(preg_replace('/[^0-9]+/', '', trim($array_IBC[$x])), 0)*0);;        
     }
-    elseif (($salario/$array_diastrabajados[$x]) < ($smd*4))
-    {
-            $array_AporteFSP[$x] = 0;        
-    }
-}
+}  
 
 $Razonsocial2 = trim($Razonsocial);
 $espacios = 35 - strlen($Razonsocial);
@@ -371,7 +346,10 @@ $sumaAportePension = array_sum($array_AportePension);
 
 <?php 
 $X = 0;
-
+for($i = 0; $i < $cuenta_Cedula; $i++)
+    {
+        $totalrenglones = $i+1;
+    }
 
 // Imprimimos nuestros valores desde el array para mostrarlos en pantalla 
 echo "AUTOL<br/>";
@@ -380,19 +358,20 @@ print"
 
 000500020000000001000000".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT)."00000000000000000000000000000000000000000000000000000100100000000000000N000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br/>
 
-000500030000000001000001".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT).str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."01000000000000000000000000000000<b>$tipoDoc</b>".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT)."<b>$Razonsocial2</b>".str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."01<b>$direccion2</b>".str_pad($cc, 3, "0", STR_PAD_LEFT).str_pad($dep, 2, "0", STR_PAD_LEFT)."<b>$tel</b>".str_pad($Sticker, 15, "0", STR_PAD_LEFT).str_pad($tipovincu, 1, "0", STR_PAD_LEFT)."0".str_pad($numPatronal, 10, "0", STR_PAD_LEFT)."000000".str_pad($afiliadosPensiones, 6, "0", STR_PAD_LEFT)."000000".str_pad($renglonDiligencia, 6, "0", STR_PAD_LEFT)."<b>$tipoCobertura</b>2N&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp".$spr2."<br/>";
+000500030000000001000001".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT).str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."01000000000000000000000000000000<b>$tipoDoc</b>".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT)."<b>$Razonsocial2</b>".str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."01<b>$direccion2</b>".str_pad($cc, 3, "0", STR_PAD_LEFT).str_pad($dep, 2, "0", STR_PAD_LEFT)."<b>$tel</b>".str_pad($Sticker, 15, "0", STR_PAD_LEFT).str_pad($tipovincu, 1, "0", STR_PAD_LEFT)."0".str_pad($numPatronal, 10, "0", STR_PAD_LEFT)."000000".str_pad($totalrenglones, 6, "0", STR_PAD_LEFT)."000000".str_pad($totalrenglones, 6, "0", STR_PAD_LEFT)."<b>$tipoCobertura</b>2N&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp".$spr2."<br/>";
 
 for($i = 0; $i < $cuenta_Cedula; $i++)
     {
+        $totalrenglones = $i+1;
         print
-        "000500030000000001000001".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT).str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."013".str_pad($i+1, 6, "0", STR_PAD_LEFT)."000000000000000".$tipoDocCET.str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_Cedula[$i])), 0),11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).$array_nombre2[$i].$array_NovedadPension2[$i]."&nbsp&nbsp".str_pad($array_DiaAIN[$i], 2, "0", STR_PAD_LEFT).str_pad($array_DuracionNoved[$i], 2, "0", STR_PAD_LEFT).str_pad(trim($array_diastrabajados[$i]), 2, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_IBC[$i])), 0),12, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_AportePension[$i])), 0),10, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_AporteFSP[$i])), 0),10, "0", STR_PAD_LEFT)."0000000000&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br/>";
+        "000500030000000001000001".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT).str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."013".str_pad($i+1, 6, "0", STR_PAD_LEFT)."000000000000000".trim($array_tipoDocCET[$i]).str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_Cedula[$i])), 0),11, "0", STR_PAD_LEFT)."0".$array_nombre2[$i].$array_NovedadPension2[$i]."&nbsp&nbsp".str_pad($array_DiaAIN[$i], 2, "0", STR_PAD_LEFT).str_pad($array_DuracionNoved[$i], 2, "0", STR_PAD_LEFT).str_pad(trim($array_diastrabajados[$i]), 2, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', trim(floor($array_IBC[$i]))), 0),12, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', trim(floor($array_AportePension[$i]))), 0),10, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', trim(floor($array_AporteFSP[$i]))), 0),10, "0", STR_PAD_LEFT)."0000000000&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br/>";
     }
 echo "
-000500030000000001000001".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT).str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."015000000000000000000000".str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaIBC), 0),12, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAportePension), 0),10, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAporteFSP), 0),10, "0", STR_PAD_LEFT)."0000000000&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp000000000000000000000000000000000000000000&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br/>
+000500030000000001000001".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT).str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."015000000000000000000000".str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaIBC)), 0),12, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaAportePension)), 0),10, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaAporteFSP)), 0),10, "0", STR_PAD_LEFT)."0000000000&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp000000000000000000000000000000000000000000&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br/>
 
-000500070000000001000000".str_pad($nit, 11, "0", STR_PAD_LEFT)."<b>$DV</b>".str_pad($sucursal, 3, "0", STR_PAD_LEFT)."000000000000000000001".str_pad($cuenta_Cedula, 6, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaIBC), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAportePension), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAporteFSP), 0),14, "0", STR_PAD_LEFT)."00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br/>
+000500070000000001000000".str_pad($nit, 11, "0", STR_PAD_LEFT)."<b>$DV</b>".str_pad($sucursal, 3, "0", STR_PAD_LEFT)."000000000000000000001".str_pad($totalrenglones, 6, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaIBC)), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaAportePension)), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaAporteFSP)), 0),14, "0", STR_PAD_LEFT)."00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br/>
 
-000500080000000000000000".str_pad($nit, 11, "0", STR_PAD_LEFT)."<b>$DV</b>".str_pad($sucursal, 3, "0", STR_PAD_LEFT)."000000000000000000001".str_pad($cuenta_Cedula, 6, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaIBC), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAportePension), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAporteFSP), 0),14, "0", STR_PAD_LEFT)."00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br/>
+000500080000000000000000".str_pad($nit, 11, "0", STR_PAD_LEFT)."<b>$DV</b>".str_pad($sucursal, 3, "0", STR_PAD_LEFT)."000000000000000000001".str_pad($totalrenglones, 6, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaIBC)), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaAportePension)), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaAporteFSP)), 0),14, "0", STR_PAD_LEFT)."00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br/>
 
 CINTI<br/>
 000000000000000000000000".str_pad($nit, 11, "0", STR_PAD_LEFT)."<b>$DV</b>".str_pad($sucursal, 3, "0", STR_PAD_LEFT)."000000000000000000000".date('Ymd')."000010000000000000000000000000&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspC<br/>
@@ -467,15 +446,15 @@ $file = fopen("$ruta/AUTOL1.txt", "w+");
 // Imprimimos nuestros valores desde el array para mostrarlos en pantalla 
 fwrite($file, "000500010000000000000000".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT)."00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                                                   " . PHP_EOL);
 fwrite($file, "000500020000000001000000".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT)."00000000000000000000000000000000000000000000000000000100100000000000000N000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                 " . PHP_EOL);
-fwrite($file, "000500030000000001000001".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT).str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."01000000000000000000000000000000".$tipoDoc.str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT)."$Razonsocial1".str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."01$direccion1".str_pad($cc, 3, "0", STR_PAD_LEFT).str_pad($dep, 2, "0", STR_PAD_LEFT).$tel.str_pad($Sticker, 15, "0", STR_PAD_LEFT).str_pad($tipovincu, 1, "0", STR_PAD_LEFT)."0".str_pad($numPatronal, 10, "0", STR_PAD_LEFT)."000000".str_pad($afiliadosPensiones, 6, "0", STR_PAD_LEFT)."000000".str_pad($renglonDiligencia, 6, "0", STR_PAD_LEFT)."$tipoCobertura"."2N                                                                              $spr1" . PHP_EOL);
+fwrite($file, "000500030000000001000001".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT).str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."01000000000000000000000000000000".$tipoDoc.str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT)."$Razonsocial1".str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."01$direccion1".str_pad($cc, 3, "0", STR_PAD_LEFT).str_pad($dep, 2, "0", STR_PAD_LEFT).$tel.str_pad($Sticker, 15, "0", STR_PAD_LEFT).str_pad($tipovincu, 1, "0", STR_PAD_LEFT)."0".str_pad($numPatronal, 10, "0", STR_PAD_LEFT)."000000".str_pad($totalrenglones, 6, "0", STR_PAD_LEFT)."000000".str_pad($totalrenglones, 6, "0", STR_PAD_LEFT)."$tipoCobertura"."2N                                                                              $spr1" . PHP_EOL);
 for($i = 0; $i < $cuenta_Cedula; $i++)
     {        
-        fwrite($file, "000500030000000001000001".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT).str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."013".str_pad($i+1, 6, "0", STR_PAD_LEFT)."000000000000000".trim($tipoDocCET).str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_Cedula[$i])), 0),11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).$array_nombre1[$i].$array_NovedadPension1[$i]."  ".str_pad(trim($array_DiaAIN[$i]), 2, "0", STR_PAD_LEFT).str_pad(trim($array_DuracionNoved[$i]), 2, "0", STR_PAD_LEFT).str_pad(trim($array_diastrabajados[$i]), 2, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_IBC[$i])), 0),12, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_AportePension[$i])), 0),10, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_AporteFSP[$i])), 0),10, "0", STR_PAD_LEFT)."0000000000                                                                                                                                                                        " . PHP_EOL);
+        fwrite($file, "000500030000000001000001".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT).str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."013".str_pad($i+1, 6, "0", STR_PAD_LEFT)."000000000000000".trim($array_tipoDocCET[$i]).str_pad(intval(preg_replace('/[^0-9]+/', '', trim($array_Cedula[$i])), 0),11, "0", STR_PAD_LEFT)."0".$array_nombre1[$i].$array_NovedadPension1[$i]."  ".str_pad(trim($array_DiaAIN[$i]), 2, "0", STR_PAD_LEFT).str_pad(trim($array_DuracionNoved[$i]), 2, "0", STR_PAD_LEFT).str_pad(trim($array_diastrabajados[$i]), 2, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', trim(floor($array_IBC[$i]))), 0),12, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', trim(floor($array_AportePension[$i]))), 0),10, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', trim(floor($array_AporteFSP[$i]))), 0),10, "0", STR_PAD_LEFT)."0000000000                                                                                                                                                                        " . PHP_EOL);
 
         }
-fwrite($file, "000500030000000001000001".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT).str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."015000000000000000000000".str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaIBC), 0),12, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAportePension), 0),10, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAporteFSP), 0),10, "0", STR_PAD_LEFT)."0000000000                                          000000000000000000000000000000000000000000                                                                                                                                   " . PHP_EOL);
-fwrite($file, "000500070000000001000000".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT)."000000000000000000001".str_pad($cuenta_Cedula, 6, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaIBC), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAportePension), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAporteFSP), 0),14, "0", STR_PAD_LEFT)."00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                              " . PHP_EOL);
-fwrite($file, "000500080000000000000000".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT)."000000000000000000001".str_pad($cuenta_Cedula, 6, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaIBC), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAportePension), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAporteFSP), 0),14, "0", STR_PAD_LEFT)."00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                              " . PHP_EOL);
+fwrite($file, "000500030000000001000001".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT).str_pad($AÑOMES, 6, "0", STR_PAD_RIGHT)."015000000000000000000000".str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaIBC)), 0),12, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaAportePension)), 0),10, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaAporteFSP)), 0),10, "0", STR_PAD_LEFT)."0000000000                                          000000000000000000000000000000000000000000                                                                                                                                   " . PHP_EOL);
+fwrite($file, "000500070000000001000000".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT)."000000000000000000001".str_pad($totalrenglones, 6, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaIBC)), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaAportePension)), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', floor($sumaAporteFSP)), 0),14, "0", STR_PAD_LEFT)."00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                              " . PHP_EOL);
+fwrite($file, "000500080000000000000000".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT)."000000000000000000001".str_pad($totalrenglones, 6, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaIBC), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAportePension), 0),14, "0", STR_PAD_LEFT).str_pad(intval(preg_replace('/[^0-9]+/', '', $sumaAporteFSP), 0),14, "0", STR_PAD_LEFT)."00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                              " . PHP_EOL);
 fclose($file);
 
 $file = fopen("$ruta/CINTI.txt", "w+");
@@ -483,8 +462,10 @@ fwrite($file, "000000000000000000000000".str_pad($nit, 11, "0", STR_PAD_LEFT).st
 fclose($file);
 
 $file = fopen("$ruta/CINTF.txt", "w+");
-fwrite($file, "009999990000000000000000".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT)."000000000000000".str_pad($cuenta_Cedula, 5, "0", STR_PAD_LEFT)."000000000000000000000000000000000000000000000000000000000000000000000000000                                                                                                                                                                                                " . PHP_EOL);
+fwrite($file, "009999990000000000000000".str_pad($nit, 11, "0", STR_PAD_LEFT).str_pad($DV, 1, "0", STR_PAD_LEFT).str_pad($sucursal, 3, "0", STR_PAD_LEFT)."000000000000000".str_pad($totalrenglones, 5, "0", STR_PAD_LEFT)."000000000000000000000000000000000000000000000000000000000000000000000000000                                                                                                                                                                                                " . PHP_EOL);
 fclose($file);
+
+
 
 ?> 
 

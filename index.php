@@ -1,10 +1,4 @@
-<?php 
-$ aplicación -> get ( ' / cowsay ' , la función () utilizar ( $ aplicación ) {
-   $ aplicación [ ' monólogo ' ] -> addDebug ( ' cowsay ' );
-   retorno  " <pre> " . \ Cowsayphp \ Vaca :: dicen ( " Las habas frescas " ). " </ pre> " ; 
-});
-
-?> 
+<!--realizado por CRISTHIAN CAMILO ALVAREZ GOMEZ-->
 
 <html> 
 
@@ -99,21 +93,18 @@ $ aplicación -> get ( ' / cowsay ' , la función () utilizar ( $ aplicación ) 
 		</div><br/>
 		<div class="row show-grid">			
 				<div class="col-md-2"><input type="text" class="form-control" required placeholder="#Patronal" name="numPatronal" maxlength="10" onkeypress="return permite(event, 'num')"/></div>
-				<div class="col-md-2"><input type="text" class="form-control" required placeholder="Afiliados a pensiones" name="afiliadosPensiones" maxlength="6" onkeypress="return permite(event, 'num')"/></div>
-				<div class="col-md-2"><input type="text" class="form-control" required placeholder="Renglon de diligencia" name="renglonDiligencia" maxlength="6" onkeypress="return permite(event, 'num')"/></div>
 				<div class="col-md-2"><input type="text" class="form-control" required placeholder="Tipo de cobertura" name="tipoCobertura" maxlength="6" onkeypress="return permite(event, 'num')"/></div>
-				<div class="col-md-2"><input type="text" class="form-control" placeholder="S.P.R" name="spr" maxlength="6" onkeypress="return permite(event, 'num')"/></div>		
-				<div class="col-md-1"><input rows="20" class="form-control" required placeholder="Tipo de Documento(C-E-T)" name="tipoDocCET" cols="1" onkeypress="return permite(event, 'car')"/></div>
+				<div class="col-md-2"><input type="text" class="form-control" placeholder="S.P.R" name="spr" maxlength="6" onkeypress="return permite(event, 'num')"/></div>
 		</div><br/>
 				<div class="row show-grid">	
-				
-				<div class="col-md-2"><textarea rows="20" class="form-control" required placeholder="Cedula" name="cedula" cols="11" onkeypress="return permite(event, 'num')"/></textarea></div>
-				<div class="col-md-4"><textarea rows="20" class="form-control" required placeholder="Nombre completo" name="nombre" cols="40" onkeypress="return permite(event, 'car')"/></textarea></div>
-				<div class="col-md-1"><textarea rows="20" class="form-control" required placeholder="Novedad pension" name="NovedadPension" cols="1" onkeypress="return permite(event, 'car')"></textarea></div>
-				<div class="col-md-1"><textarea rows="20" class="form-control" placeholder="Dia Ant. Inic. Nov." name="DiaAIN" cols="2" onkeypress="return permite(event, 'num')"/></textarea></div>
-				<div class="col-md-1"><textarea rows="20" class="form-control" placeholder="Duracion noved." name="DuracionNoved" cols="2" onkeypress="return permite(event, 'num')"/></textarea></div>
-				<div class="col-md-1"><textarea rows="20" class="form-control" required placeholder="Dias trabajados" name="diastrabajados" cols="4" onkeypress="return permite(event, 'num')"/></textarea></div>
-				<div class="col-md-1"><textarea rows="20" class="form-control" required placeholder="IBC" name="IBC" cols="12" onkeypress="return permite(event, 'num')"/></textarea></div>			
+				<div class="col-md-1"><textarea rows="20" class="form-control" required placeholder="Tipo de Documento(C-E-T)" name="tipoDocCET" cols="1"/></textarea></div>
+				<div class="col-md-2"><textarea rows="20" class="form-control" required placeholder="Cedula" name="cedula" cols="11" /></textarea></div>
+				<div class="col-md-4"><textarea rows="20" class="form-control" required placeholder="Nombre completo" name="nombre" cols="40" /></textarea></div>
+				<div class="col-md-1"><textarea rows="20" class="form-control" required placeholder="Novedad pension" name="NovedadPension" cols="1" ></textarea></div>
+				<div class="col-md-1"><textarea rows="20" class="form-control" placeholder="Dia Ant. Inic. Nov." name="DiaAIN" cols="2" /></textarea></div>
+				<div class="col-md-1"><textarea rows="20" class="form-control" placeholder="Duracion noved." name="DuracionNoved" cols="2" /></textarea></div>
+				<div class="col-md-1"><textarea rows="20" class="form-control" required placeholder="Dias trabajados" name="diastrabajados" cols="4" /></textarea></div>
+				<div class="col-md-1"><textarea rows="20" class="form-control" required placeholder="IBC" name="IBC" cols="12" /></textarea></div>			
 		</div><br/>
 		<div class="row show-grid">	
 			<div class="col-md-4"><input type="text" class="form-control" required placeholder="Ruta donde se guardara" name="ruta" maxlength="500" onclick="valida()"/></div>
@@ -121,9 +112,6 @@ $ aplicación -> get ( ' / cowsay ' , la función () utilizar ( $ aplicación ) 
 		</div>
 	</div>
 </form> 
-
-
-
 </body> 
 
 </html>
